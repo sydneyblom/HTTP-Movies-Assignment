@@ -15,12 +15,14 @@ const [movie, setMovie] = useState (initialState);
 
 
 useEffect(() => {
-    const movieToEdit = props.movies.find(
-      movie => `${movie.id}`===props.match.params.id
-    )
+    const item = props.match.params.id;
+    console.log(item);
+    axios(`http://localhost:5000/api/movies/${item}`)
+        .then(res => setMovie(res.data))
+        .catch(err => console.log(err));
+}, [props.match.params.id]);
 
-    if (movieToEdit) setMovie(movieToEdit);
-  }, [props.movies, props.match.params.id]);
+
 
   const handleChanges = e => {
     console.log(e.target.value);
